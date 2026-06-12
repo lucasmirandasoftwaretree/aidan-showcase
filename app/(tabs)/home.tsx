@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Link } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { Href, router } from 'expo-router';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Header } from '@/components/Header';
 import { InfoCard } from '@/components/InfoCard';
 import { Screen } from '@/components/Screen';
@@ -12,6 +12,14 @@ const toneColor = {
   success: colors.success,
   warning: colors.warning
 };
+
+function CardLink({ href, title, description }: { href: Href; title: string; description: string }) {
+  return (
+    <Pressable onPress={() => router.push(href)} style={({ pressed }) => pressed && styles.pressed}>
+      <InfoCard title={title} description={description} />
+    </Pressable>
+  );
+}
 
 export default function HomeScreen() {
   return (
@@ -33,12 +41,8 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.grid}>
-        <Link href="/summary" asChild>
-          <InfoCard title="Resumo" description="Veja o objetivo da apresentação e o estado atual." />
-        </Link>
-        <Link href="/(tabs)/assistant" asChild>
-          <InfoCard title="Conversar" description="Abra a conversa mockada com o Aidan." />
-        </Link>
+        <CardLink href="/summary" title="Resumo" description="Veja o objetivo da apresentação e o estado atual." />
+        <CardLink href="/(tabs)/assistant" title="Conversar" description="Abra a conversa mockada com o Aidan." />
       </View>
 
       <Text style={styles.sectionTitle}>Atividades mockadas</Text>
@@ -145,5 +149,9 @@ const styles = StyleSheet.create({
     color: colors.muted,
     fontSize: 14,
     lineHeight: 20
+  },
+  pressed: {
+    opacity: 0.82,
+    transform: [{ scale: 0.99 }]
   }
 });

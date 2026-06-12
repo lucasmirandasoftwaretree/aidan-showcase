@@ -29,6 +29,14 @@ npx expo start
 
 No Android, abra o Expo Go e escaneie o QR Code.
 
+## Rodar no navegador
+
+```bash
+npm run web
+```
+
+Se o npm reclamar de dependência antiga, apague `node_modules` e `package-lock.json` e rode `npm install` novamente.
+
 ## Gerar APK preview
 
 ```bash
