@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { AndroidNavBar, Card, Phone, PrimaryButton, TopBar } from '@/components/AidanUI';
 import { cartItems } from '@/data/mock';
@@ -24,7 +25,21 @@ export default function CartTimeScreen() {
 }
 
 function DeliveryBox() {
-  return <Card style={styles.delivery}><Ionicons name="bus" size={30} color="#5865F2" /><View style={{ flex: 1 }}><Text style={styles.deliveryTitle}>Entrega pelo AIDAN</Text><Text style={styles.deliveryText}>Conte com entregadores cadastrados para receber suas compras</Text><View style={styles.request}><Ionicons name="square-outline" size={19} color="#333" /><Text style={styles.requestText}>Quero solicitar entrega via AIDAN</Text></View></View></Card>;
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <Card style={styles.delivery}>
+      <Ionicons name="bus" size={30} color="#5865F2" />
+      <View style={{ flex: 1 }}>
+        <Text style={styles.deliveryTitle}>Entrega pelo AIDAN</Text>
+        <Text style={styles.deliveryText}>Conte com entregadores cadastrados para receber suas compras</Text>
+        <Pressable onPress={() => setChecked(!checked)} style={styles.request}>
+          <Ionicons name={checked ? 'checkbox' : 'square-outline'} size={19} color={checked ? '#5865F2' : '#333'} />
+          <Text style={styles.requestText}>Quero solicitar entrega via AIDAN</Text>
+        </Pressable>
+      </View>
+    </Card>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -42,8 +57,8 @@ const styles = StyleSheet.create({
   delivery: { height: 70, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 8, marginBottom: 22 },
   deliveryTitle: { color: '#333333', fontSize: 15, fontWeight: '900' },
   deliveryText: { color: '#555555', fontSize: 8, marginBottom: 3 },
-  request: { flexDirection: 'row', alignItems: 'center' },
-  requestText: { color: '#111111', fontSize: 9, fontWeight: '800' },
+  request: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start' },
+  requestText: { color: '#111111', fontSize: 9, fontWeight: '800', marginLeft: 2 },
   button: { backgroundColor: '#5865F2' },
   nav: { position: 'absolute', left: 0, right: 0, bottom: 0 }
 });

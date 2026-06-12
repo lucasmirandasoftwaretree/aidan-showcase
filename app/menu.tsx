@@ -1,7 +1,7 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { BottomArea, DaraAvatar, IconLine, Phone, PrimaryButton, SearchBox } from '@/components/AidanUI';
+import { BottomArea, DaraAvatar, IconLine, Phone, SearchBox } from '@/components/AidanUI';
 
 const logo = require('../assets/aidan-logo.png');
 
@@ -13,7 +13,10 @@ function HomeDimmed() {
         <View style={styles.brandRow}><Image source={logo} style={styles.logo} resizeMode="contain" /><Text style={styles.brandText}>O que vamos comprar hoje?</Text></View>
         <SearchBox />
         <View style={styles.categories}>{['MERCADO', 'COMBUSTÍVEL', 'FARMÁCIA', 'LIVRARIA'].map((label) => <View key={label} style={styles.category}><Text style={styles.categoryText}>{label}</Text></View>)}</View>
-        <PrimaryButton label="Escanear cupons\n▯▯▯" disabled style={styles.scanButton} />
+        <View style={styles.scanButton}>
+          <Text style={styles.scanText}>Escanear cupons</Text>
+          <Ionicons name="barcode-outline" size={58} color="#FFFFFF" />
+        </View>
       </View>
       <BottomArea active="home" />
     </View>
@@ -57,7 +60,8 @@ const styles = StyleSheet.create({
   categories: { flexDirection: 'row', flexWrap: 'wrap', columnGap: 16, rowGap: 17, justifyContent: 'center', marginTop: 52, marginBottom: 83 },
   category: { width: 113, height: 42, borderRadius: 5, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.16, shadowRadius: 2, elevation: 2 },
   categoryText: { color: '#333333', fontSize: 14 },
-  scanButton: { height: 113, width: 205, alignSelf: 'center', backgroundColor: '#5865F2' },
+  scanButton: { height: 113, width: 205, alignSelf: 'center', backgroundColor: '#5865F2', borderRadius: 6, alignItems: 'center', justifyContent: 'center', shadowColor: '#000000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.16, shadowRadius: 3, elevation: 3 },
+  scanText: { color: '#FFFFFF', fontSize: 15, fontWeight: '800', marginBottom: 2 },
   closeLayer: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.12)' },
   drawer: { position: 'absolute', left: 0, top: 0, width: 260, height: 382, backgroundColor: '#FFFFFF', borderBottomRightRadius: 17, paddingTop: 19, paddingHorizontal: 30 },
   drawerHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 19 },

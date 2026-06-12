@@ -1,7 +1,7 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { BottomArea, Phone, PrimaryButton, SearchBox } from '@/components/AidanUI';
+import { BottomArea, Phone, SearchBox } from '@/components/AidanUI';
 
 const logo = require('../assets/aidan-logo.png');
 
@@ -20,7 +20,10 @@ export default function HomeScreen() {
         <View style={styles.categories}>
           {['MERCADO', 'COMBUSTÍVEL', 'FARMÁCIA', 'LIVRARIA'].map((label) => <Pressable key={label} onPress={() => router.push('/shopping-list')} style={styles.category}><Text style={styles.categoryText}>{label}</Text></Pressable>)}
         </View>
-        <PrimaryButton label="Escanear cupons\n▯▯▯" href="/shopping-list" style={styles.scanButton} />
+        <Pressable onPress={() => router.push('/shopping-list')} style={({ pressed }) => [styles.scanButton, pressed && styles.pressed]}>
+          <Text style={styles.scanText}>Escanear cupons</Text>
+          <Ionicons name="barcode-outline" size={58} color="#FFFFFF" />
+        </Pressable>
       </View>
       <BottomArea active="home" />
     </Phone>
@@ -37,5 +40,7 @@ const styles = StyleSheet.create({
   categories: { flexDirection: 'row', flexWrap: 'wrap', columnGap: 16, rowGap: 17, justifyContent: 'center', marginTop: 52, marginBottom: 83 },
   category: { width: 113, height: 42, borderRadius: 5, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.16, shadowRadius: 2, elevation: 2 },
   categoryText: { color: '#333333', fontSize: 14 },
-  scanButton: { height: 113, width: 205, alignSelf: 'center', backgroundColor: '#5865F2' }
+  scanButton: { height: 113, width: 205, alignSelf: 'center', backgroundColor: '#5865F2', borderRadius: 6, alignItems: 'center', justifyContent: 'center', shadowColor: '#000000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.16, shadowRadius: 3, elevation: 3 },
+  scanText: { color: '#FFFFFF', fontSize: 15, fontWeight: '800', marginBottom: 2 },
+  pressed: { opacity: 0.85, transform: [{ scale: 0.99 }] }
 });
