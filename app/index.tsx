@@ -7,6 +7,7 @@ const googleIcon = require('../assets/google-g.png');
 
 export default function LoginScreen() {
   const goToDemo = () => router.replace('/(tabs)/home');
+  const goToGoogleFlow = () => router.push('/google-account');
 
   return (
     <View style={styles.page}>
@@ -19,7 +20,7 @@ export default function LoginScreen() {
 
           <Text style={styles.title}>FAÇA LOGIN OU CRIE UMA CONTA</Text>
 
-          <Pressable style={styles.googleButton} onPress={goToDemo}>
+          <Pressable style={styles.googleButton} onPress={goToGoogleFlow}>
             <Image source={googleIcon} style={styles.googleIcon} resizeMode="contain" />
             <Text style={styles.googleText}>Continuar com o Google</Text>
           </Pressable>
