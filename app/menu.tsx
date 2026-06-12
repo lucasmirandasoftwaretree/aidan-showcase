@@ -1,4 +1,5 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Animated, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { BottomArea, DaraAvatar, IconLine, Phone, SearchBox } from '@/components/AidanUI';
@@ -24,11 +25,46 @@ function HomeDimmed() {
 }
 
 export default function MenuScreen() {
+  const slideAnim = useRef(new Animated.Value(-270)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 280,
+        useNativeDriver: true
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 260,
+        useNativeDriver: true
+      })
+    ]).start();
+  }, [fadeAnim, slideAnim]);
+
+  const closeMenu = () => {
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: -270,
+        duration: 220,
+        useNativeDriver: true
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true
+      })
+    ]).start(() => router.push('/home'));
+  };
+
   return (
     <Phone bordered contentStyle={styles.phone}>
       <HomeDimmed />
-      <Pressable style={styles.closeLayer} onPress={() => router.push('/home')} />
-      <View style={styles.drawer}>
+      <Animated.View style={[styles.closeLayer, { opacity: fadeAnim }]}>
+        <Pressable style={StyleSheet.absoluteFill} onPress={closeMenu} />
+      </Animated.View>
+      <Animated.View style={[styles.drawer, { transform: [{ translateX: slideAnim }] }]}>
         <View style={styles.drawerHeader}>
           <Text style={styles.menuTitle}>Menu</Text>
           <Ionicons name="notifications-outline" size={24} color="#4B5CFF" />
@@ -45,7 +81,7 @@ export default function MenuScreen() {
           <IconLine icon="settings-outline" text="Configurações" href="/settings" />
           <IconLine icon="log-out-outline" text="Sair" href="/" />
         </View>
-      </View>
+      </Animated.View>
     </Phone>
   );
 }
@@ -63,7 +99,7 @@ const styles = StyleSheet.create({
   scanButton: { height: 113, width: 205, alignSelf: 'center', backgroundColor: '#5865F2', borderRadius: 6, alignItems: 'center', justifyContent: 'center', shadowColor: '#000000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.16, shadowRadius: 3, elevation: 3 },
   scanText: { color: '#FFFFFF', fontSize: 15, fontWeight: '800', marginBottom: 2 },
   closeLayer: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.12)' },
-  drawer: { position: 'absolute', left: 0, top: 0, width: 260, height: 382, backgroundColor: '#FFFFFF', borderBottomRightRadius: 17, paddingTop: 19, paddingHorizontal: 30 },
+  drawer: { position: 'absolute', left: 0, top: 0, width: 260, height: 382, backgroundColor: '#FFFFFF', borderBottomRightRadius: 17, paddingTop: 19, paddingHorizontal: 30, shadowColor: '#000000', shadowOffset: { width: 8, height: 0 }, shadowOpacity: 0.12, shadowRadius: 18, elevation: 8 },
   drawerHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 19 },
   menuTitle: { color: '#333333', fontSize: 16, fontWeight: '900' },
   profileRow: { flexDirection: 'row', alignItems: 'center', gap: 13, marginBottom: 18 },

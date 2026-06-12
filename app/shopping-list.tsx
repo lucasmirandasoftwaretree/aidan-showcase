@@ -1,25 +1,34 @@
+import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { BottomArea, Card, Phone, PrimaryButton, SearchBox, TopBar } from '@/components/AidanUI';
 import { cartItems } from '@/data/mock';
 
+function normalize(value: string) {
+  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
 export default function ShoppingListScreen() {
+  const [search, setSearch] = useState('');
+  const filteredItems = cartItems.filter((row) => normalize(`${row.item} ${row.qty} ${row.best}`).includes(normalize(search)));
+
   return (
     <Phone bordered contentStyle={styles.phone}>
       <TopBar title="Lista de Compras" />
       <View style={styles.content}>
-        <SearchBox />
+        <SearchBox value={search} onChangeText={setSearch} />
         <Text style={styles.mail}>✉️</Text>
         <Card style={styles.listCard}>
           <Text style={styles.listTitle}>LISTA</Text>
           <View style={styles.tableHeader} />
-          {cartItems.map((row, index) => (
+          {filteredItems.map((row) => (
             <View key={row.item} style={styles.itemRow}>
               <View style={styles.checkbox} />
               <Text style={styles.itemName}>{row.item}</Text>
               <Text style={styles.qty}>{row.qty}</Text>
             </View>
           ))}
-          <View style={styles.emptyRows}>{Array.from({ length: 6 }).map((_, i) => <View key={i} style={styles.emptyLine} />)}</View>
+          {filteredItems.length === 0 && <Text style={styles.empty}>Nenhum item encontrado</Text>}
+          <View style={styles.emptyRows}>{Array.from({ length: Math.max(2, 6 - filteredItems.length) }).map((_, i) => <View key={i} style={styles.emptyLine} />)}</View>
         </Card>
         <PrimaryButton label="Escolha seu perfil de economia" href="/saving-splash" style={styles.button} />
       </View>
@@ -39,6 +48,7 @@ const styles = StyleSheet.create({
   checkbox: { width: 15, height: 15, borderWidth: 2, borderColor: '#EEEEEE', marginRight: 10 },
   itemName: { color: '#333333', fontSize: 11, flex: 1 },
   qty: { color: '#333333', fontSize: 11, width: 44 },
+  empty: { color: '#888888', fontSize: 12, textAlign: 'center', paddingVertical: 26 },
   emptyRows: { flex: 1, paddingHorizontal: 18 },
   emptyLine: { height: 26, borderBottomWidth: 1, borderBottomColor: '#EEEEEE' },
   button: { backgroundColor: '#5865F2' }

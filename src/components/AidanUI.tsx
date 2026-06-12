@@ -91,7 +91,36 @@ export function TopBar({ title, backHref, rightLabel, onRightPress }: { title: s
   );
 }
 
-export function SearchBox({ value = '', placeholder = 'Pesquisar', onPress }: { value?: string; placeholder?: string; onPress?: () => void }) {
+type SearchBoxProps = {
+  value?: string;
+  placeholder?: string;
+  onPress?: () => void;
+  onChangeText?: (text: string) => void;
+  editable?: boolean;
+  autoFocus?: boolean;
+  onSubmitEditing?: () => void;
+};
+
+export function SearchBox({ value = '', placeholder = 'Pesquisar', onPress, onChangeText, editable = true, autoFocus = false, onSubmitEditing }: SearchBoxProps) {
+  if (onChangeText) {
+    return (
+      <View style={styles.searchBox}>
+        <Ionicons name="search" size={34} color="#376BFF" />
+        <TextInput
+          value={value}
+          editable={editable}
+          autoFocus={autoFocus}
+          onChangeText={onChangeText}
+          onSubmitEditing={onSubmitEditing}
+          placeholder={placeholder}
+          placeholderTextColor="#C2C2C2"
+          returnKeyType="search"
+          style={[styles.searchInput, value ? styles.searchInputValue : null]}
+        />
+      </View>
+    );
+  }
+
   return (
     <Pressable onPress={onPress} style={styles.searchBox}>
       <Ionicons name="search" size={34} color="#376BFF" />
@@ -344,6 +373,17 @@ const styles = StyleSheet.create({
     marginLeft: 6
   },
   searchValue: {
+    color: '#303030'
+  },
+  searchInput: {
+    flex: 1,
+    color: '#C2C2C2',
+    fontSize: 16,
+    marginLeft: 6,
+    paddingVertical: 0,
+    outlineStyle: 'none'
+  } as any,
+  searchInputValue: {
     color: '#303030'
   },
   bottomArea: {
