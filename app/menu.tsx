@@ -83,7 +83,7 @@ export default function MenuScreen() {
           <IconLine icon="map-outline" text="Mapa interativo" href="/map" />
           <IconLine icon="people-outline" text="Comunidade" href="/community" />
           <IconLine icon="settings-outline" text="Configurações" href="/settings" />
-          <IconLine icon="log-out-outline" text="Sair" href="/" />
+          <IconLine icon="log-out-outline" text="Sair" href="/login" />
         </View>
       </Animated.View>
     </Phone>

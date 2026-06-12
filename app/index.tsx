@@ -1,46 +1,94 @@
-import { Image, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Animated, Easing, Image, Platform, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
 const logo = require('../assets/aidan-logo.png');
-const googleIcon = require('../assets/google-g.png');
 
-export default function LoginScreen() {
-  const goToGoogleFlow = () => router.push('/google-account');
-  const goToDemo = () => router.replace('/home');
+export default function SplashScreen() {
+  const logoOpacity = useRef(new Animated.Value(0)).current;
+  const logoScale = useRef(new Animated.Value(0.55)).current;
+  const logoRotate = useRef(new Animated.Value(-10)).current;
+  const wordOpacity = useRef(new Animated.Value(0)).current;
+  const progress = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.sequence([
+      Animated.parallel([
+        Animated.timing(logoOpacity, {
+          toValue: 1,
+          duration: 520,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: true
+        }),
+        Animated.spring(logoScale, {
+          toValue: 1,
+          friction: 6,
+          tension: 58,
+          useNativeDriver: true
+        }),
+        Animated.timing(logoRotate, {
+          toValue: 0,
+          duration: 680,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: true
+        })
+      ]),
+      Animated.parallel([
+        Animated.timing(wordOpacity, {
+          toValue: 1,
+          duration: 420,
+          easing: Easing.out(Easing.ease),
+          useNativeDriver: true
+        }),
+        Animated.timing(progress, {
+          toValue: 1,
+          duration: 760,
+          easing: Easing.inOut(Easing.cubic),
+          useNativeDriver: false
+        })
+      ])
+    ]).start();
+
+    const timer = setTimeout(() => {
+      router.replace('/login');
+    }, 1850);
+
+    return () => clearTimeout(timer);
+  }, [logoOpacity, logoScale, logoRotate, wordOpacity, progress]);
+
+  const rotate = logoRotate.interpolate({
+    inputRange: [-10, 0],
+    outputRange: ['-10deg', '0deg']
+  });
+
+  const progressWidth = progress.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0%', '100%']
+  });
 
   return (
     <View style={styles.page}>
       <StatusBar style="light" />
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.keyboard}>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <Animated.View
+          style={[
+            styles.logoWrap,
+            {
+              opacity: logoOpacity,
+              transform: [{ scale: logoScale }, { rotate }]
+            }
+          ]}
+        >
           <Image source={logo} style={styles.logo} resizeMode="contain" />
+        </Animated.View>
 
-          <Text style={styles.title}>FAÇA LOGIN OU CRIE UMA CONTA</Text>
+        <Animated.Text style={[styles.word, { opacity: wordOpacity }]}>AIDAN</Animated.Text>
 
-          <Pressable style={styles.googleButton} onPress={goToGoogleFlow}>
-            <Image source={googleIcon} style={styles.googleIcon} resizeMode="contain" />
-            <Text style={styles.googleText}>Continuar com o Google</Text>
-          </Pressable>
-
-          <Text style={styles.divider}>ou</Text>
-
-          <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#BDBDBD" keyboardType="email-address" autoCapitalize="none" />
-          <TextInput style={styles.input} placeholder="Senha" placeholderTextColor="#BDBDBD" secureTextEntry />
-
-          <Pressable style={styles.forgotButton} onPress={() => router.push('/register')}>
-            <Text style={styles.forgotText}>Esqueceu sua senha?</Text>
-          </Pressable>
-
-          <Pressable style={styles.loginButton} onPress={goToDemo}>
-            <Text style={styles.loginText}>Entrar</Text>
-          </Pressable>
-
-          <Pressable style={styles.signupButton} onPress={() => router.push('/register')}>
-            <Text style={styles.signupText}>Ainda não possui uma conta? Cadastre-se</Text>
-          </Pressable>
+        <View style={styles.progressTrack}>
+          <Animated.View style={[styles.progressBar, { width: progressWidth }]} />
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </View>
   );
 }
@@ -51,116 +99,44 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Platform.OS === 'web' ? '#F5F5F5' : '#5865F2'
   },
-  keyboard: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center'
-  },
   container: {
     flex: 1,
     width: '100%',
     maxWidth: Platform.OS === 'web' ? 347 : undefined,
     minHeight: 739,
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#5865F2',
     borderRadius: Platform.OS === 'web' ? 22 : 0,
-    paddingHorizontal: 38,
-    paddingTop: 55
+    paddingHorizontal: 38
+  },
+  logoWrap: {
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   logo: {
-    width: 184,
-    height: 151,
-    marginBottom: 50
+    width: 190,
+    height: 156
   },
-  title: {
-    width: '100%',
+  word: {
     color: '#FFFFFF',
-    fontSize: 14,
-    lineHeight: 18,
-    fontWeight: '500',
-    letterSpacing: 0.2,
-    textAlign: 'center',
-    marginBottom: 23
-  },
-  googleButton: {
-    width: '100%',
-    height: 42,
-    borderRadius: 5,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.12,
-    shadowRadius: 2,
-    elevation: 2
-  },
-  googleIcon: {
-    width: 29,
-    height: 24,
-    position: 'absolute',
-    left: 18
-  },
-  googleText: {
-    color: '#333333',
-    fontSize: 16,
-    fontWeight: '400'
-  },
-  divider: {
-    color: '#FFFFFF',
-    fontSize: 12,
+    fontSize: 30,
     fontWeight: '700',
-    lineHeight: 16,
-    marginTop: 10,
-    marginBottom: 13,
-    textTransform: 'uppercase'
+    letterSpacing: 8,
+    marginTop: 6,
+    marginLeft: 8
   },
-  input: {
-    width: '100%',
-    height: 42,
-    borderRadius: 5,
-    backgroundColor: '#F3F3F3',
-    color: '#333333',
-    fontSize: 15,
-    marginBottom: 16,
-    paddingHorizontal: 25,
-    outlineStyle: 'none'
-  } as any,
-  forgotButton: {
-    alignSelf: 'flex-end',
-    marginTop: -7,
-    marginBottom: 15
+  progressTrack: {
+    width: 150,
+    height: 5,
+    borderRadius: 10,
+    overflow: 'hidden',
+    backgroundColor: 'rgba(255,255,255,0.25)',
+    marginTop: 30
   },
-  forgotText: {
-    color: '#FFFFFF',
-    fontSize: 8,
-    fontWeight: '700'
-  },
-  loginButton: {
-    width: '100%',
-    height: 46,
-    backgroundColor: '#3100F5',
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.14,
-    shadowRadius: 3,
-    elevation: 3
-  },
-  loginText: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: '500'
-  },
-  signupButton: {
-    marginTop: 17
-  },
-  signupText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '400',
-    textAlign: 'center'
+  progressBar: {
+    height: '100%',
+    borderRadius: 10,
+    backgroundColor: '#7FEFBF'
   }
 });

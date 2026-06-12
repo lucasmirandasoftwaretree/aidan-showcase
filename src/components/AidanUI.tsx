@@ -82,7 +82,7 @@ export function Field({ placeholder, value, small = false, icon, tint = false }:
 }
 
 export function TopBar({ title, backHref, rightLabel, onRightPress }: { title: string; backHref?: Href; rightLabel?: string; onRightPress?: () => void }) {
-  const handleRightPress = onRightPress ?? (() => rightLabel === 'Sair' ? router.push('/') : router.back());
+  const handleRightPress = onRightPress ?? (() => rightLabel === 'Sair' ? router.push('/login') : router.back());
 
   return (
     <View style={styles.topBar}>
