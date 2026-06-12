@@ -1,8 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { BottomArea, Card, Field, Phone, PrimaryButton, TopBar } from '@/components/AidanUI';
 
 export default function CommunityShareScreen() {
+  const [opinion, setOpinion] = useState('');
+
   return (
     <Phone bordered contentStyle={styles.phone}>
       <TopBar title="Comunidade" />
@@ -10,7 +13,9 @@ export default function CommunityShareScreen() {
         <Text style={styles.prompt}>Ajude outros usuários com{`\n`}a sua opinião</Text>
         <Text style={styles.question}>Conta pra gente: vale a pena?</Text>
         <View style={styles.row}><Field placeholder="Marca" small /><Field placeholder="Nome do Produto" small /></View>
-        <Card style={styles.textArea}><Text style={styles.placeholder}>Sua Opinião</Text></Card>
+        <Card style={styles.textArea}>
+          <TextInput value={opinion} onChangeText={setOpinion} placeholder="Sua Opinião" placeholderTextColor="#C4C4C4" multiline textAlignVertical="top" style={styles.textAreaInput} />
+        </Card>
         <Text style={styles.rate}>Dê uma nota</Text>
         <Text style={styles.stars}>☆☆☆☆☆</Text>
         <Card style={styles.photo}><Ionicons name="camera-outline" size={30} color="#4F62FF" /><View><Text style={styles.photoTitle}>Foto do produto</Text><Text style={styles.photoDesc}>Envie uma foto</Text></View></Card>
@@ -29,6 +34,7 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', gap: 14, marginBottom: 11 },
   textArea: { height: 148, padding: 13, marginBottom: 16 },
   placeholder: { color: '#C4C4C4', fontSize: 15 },
+  textAreaInput: { flex: 1, color: '#333333', fontSize: 15, padding: 0, outlineStyle: 'none' } as any,
   rate: { color: '#333333', fontSize: 14, marginBottom: 4 },
   stars: { color: '#B87500', fontSize: 27, textAlign: 'center', marginBottom: 13 },
   photo: { height: 53, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15, gap: 20, marginBottom: 21 },

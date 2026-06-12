@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { AndroidNavBar, Card, DaraAvatar, Field, Phone, PrimaryButton, TopBar } from '@/components/AidanUI';
+import { Card, DaraAvatar, Field, Phone, PrimaryButton, TopBar } from '@/components/AidanUI';
 
 export default function ProfileScreen() {
   return (
@@ -21,7 +21,6 @@ export default function ProfileScreen() {
         <View style={styles.fields}><Field placeholder="Senha                                         >" /><Field placeholder="Conta para recuperação                 >" /></View>
         <PrimaryButton label="Próximo" href="/profile-address" style={styles.button} />
       </View>
-      <View style={styles.nav}><AndroidNavBar /></View>
     </Phone>
   );
 }

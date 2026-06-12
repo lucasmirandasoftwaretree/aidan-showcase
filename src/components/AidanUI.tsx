@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Image, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -71,22 +71,26 @@ export function PrimaryButton({ label, onPress, href, style, disabled = false }:
 }
 
 export function Field({ placeholder, value, small = false, icon, tint = false }: { placeholder?: string; value?: string; small?: boolean; icon?: IconName; tint?: boolean }) {
+  const [inputValue, setInputValue] = useState(value ?? '');
+
   return (
     <View style={[styles.field, small && styles.fieldSmall, tint && styles.fieldTint]}>
       {icon && <Ionicons name={icon} size={18} color={tint ? '#6B7C85' : '#B8BBC3'} />}
-      <TextInput value={value} placeholder={placeholder} placeholderTextColor="#C4C4C4" editable={false} style={styles.fieldInput} />
+      <TextInput value={inputValue} onChangeText={setInputValue} placeholder={placeholder} placeholderTextColor="#C4C4C4" style={styles.fieldInput} />
     </View>
   );
 }
 
 export function TopBar({ title, backHref, rightLabel, onRightPress }: { title: string; backHref?: Href; rightLabel?: string; onRightPress?: () => void }) {
+  const handleRightPress = onRightPress ?? (() => rightLabel === 'Sair' ? router.push('/') : router.back());
+
   return (
     <View style={styles.topBar}>
       <Pressable onPress={() => backHref ? router.push(backHref) : router.back()} style={styles.backTap}>
         <Ionicons name="arrow-back" size={28} color="#111827" />
       </Pressable>
       <Text style={styles.topTitle}>{title}</Text>
-      {rightLabel ? <Pressable onPress={onRightPress} style={styles.rightTap}><Text style={styles.rightText}>{rightLabel}</Text></Pressable> : <View style={styles.rightTap} />}
+      {rightLabel ? <Pressable onPress={handleRightPress} style={styles.rightTap}><Text style={styles.rightText}>{rightLabel}</Text></Pressable> : <View style={styles.rightTap} />}
     </View>
   );
 }
@@ -153,20 +157,13 @@ export function BottomTabs({ active = 'home' }: { active?: 'home' | 'list' | 'or
 }
 
 export function AndroidNavBar() {
-  return (
-    <View style={styles.androidNav}>
-      <Ionicons name="square" size={14} color="#3E3E3E" />
-      <Ionicons name="radio-button-on" size={21} color="#3E3E3E" />
-      <Ionicons name="caret-back" size={22} color="#3E3E3E" />
-    </View>
-  );
+  return null;
 }
 
 export function BottomArea({ active }: { active?: 'home' | 'list' | 'orders' }) {
   return (
     <View style={styles.bottomArea}>
       {active && <BottomTabs active={active} />}
-      <AndroidNavBar />
     </View>
   );
 }

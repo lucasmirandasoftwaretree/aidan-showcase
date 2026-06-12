@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Animated, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Easing, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { BottomArea, DaraAvatar, IconLine, Phone, SearchBox } from '@/components/AidanUI';
@@ -32,12 +32,14 @@ export default function MenuScreen() {
     Animated.parallel([
       Animated.timing(slideAnim, {
         toValue: 0,
-        duration: 280,
+        duration: 380,
+        easing: Easing.out(Easing.cubic),
         useNativeDriver: true
       }),
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 260,
+        duration: 320,
+        easing: Easing.out(Easing.cubic),
         useNativeDriver: true
       })
     ]).start();
@@ -47,12 +49,14 @@ export default function MenuScreen() {
     Animated.parallel([
       Animated.timing(slideAnim, {
         toValue: -270,
-        duration: 220,
+        duration: 280,
+        easing: Easing.inOut(Easing.cubic),
         useNativeDriver: true
       }),
       Animated.timing(fadeAnim, {
         toValue: 0,
-        duration: 200,
+        duration: 240,
+        easing: Easing.inOut(Easing.cubic),
         useNativeDriver: true
       })
     ]).start(() => router.push('/home'));
@@ -99,7 +103,7 @@ const styles = StyleSheet.create({
   scanButton: { height: 113, width: 205, alignSelf: 'center', backgroundColor: '#5865F2', borderRadius: 6, alignItems: 'center', justifyContent: 'center', shadowColor: '#000000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.16, shadowRadius: 3, elevation: 3 },
   scanText: { color: '#FFFFFF', fontSize: 15, fontWeight: '800', marginBottom: 2 },
   closeLayer: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.12)' },
-  drawer: { position: 'absolute', left: 0, top: 0, width: 260, height: 382, backgroundColor: '#FFFFFF', borderBottomRightRadius: 17, paddingTop: 19, paddingHorizontal: 30, shadowColor: '#000000', shadowOffset: { width: 8, height: 0 }, shadowOpacity: 0.12, shadowRadius: 18, elevation: 8 },
+  drawer: { position: 'absolute', left: 0, top: 0, width: 260, height: 420, backgroundColor: '#FFFFFF', borderBottomRightRadius: 17, paddingTop: 19, paddingHorizontal: 30, shadowColor: '#000000', shadowOffset: { width: 8, height: 0 }, shadowOpacity: 0.12, shadowRadius: 18, elevation: 8 },
   drawerHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 19 },
   menuTitle: { color: '#333333', fontSize: 16, fontWeight: '900' },
   profileRow: { flexDirection: 'row', alignItems: 'center', gap: 13, marginBottom: 18 },

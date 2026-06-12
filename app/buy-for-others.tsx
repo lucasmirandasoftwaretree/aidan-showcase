@@ -1,8 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { AndroidNavBar, Card, Field, Phone, PrimaryButton, TopBar } from '@/components/AidanUI';
+import { Card, Field, Phone, PrimaryButton, TopBar } from '@/components/AidanUI';
 
 export default function BuyForOthersScreen() {
+  const [acceptedTerms, setAcceptedTerms] = useState(true);
+
   return (
     <Phone bordered scroll contentStyle={styles.phone}>
       <TopBar title="Comprar para outros" />
@@ -25,10 +28,9 @@ export default function BuyForOthersScreen() {
           <Ionicons name="camera-outline" size={30} color="#4F62FF" />
           <View><Text style={styles.docTitle}>Foto do documento</Text><Text style={styles.docDesc}>Envie uma foto</Text></View>
         </Card>
-        <View style={styles.terms}><Ionicons name="checkbox" size={18} color="#5865F2" /><Text style={styles.termsText}>Concordo com os <Text style={styles.termsLink}>termos de uso</Text></Text></View>
+        <Pressable onPress={() => setAcceptedTerms(!acceptedTerms)} style={styles.terms}><Ionicons name={acceptedTerms ? 'checkbox' : 'square-outline'} size={18} color={acceptedTerms ? '#5865F2' : '#555'} /><Text style={styles.termsText}>Concordo com os <Text style={styles.termsLink}>termos de uso</Text></Text></Pressable>
         <PrimaryButton label="Finalizar" href="/earn-dashboard" style={styles.button} />
       </View>
-      <View style={styles.nav}><AndroidNavBar /></View>
     </Phone>
   );
 }

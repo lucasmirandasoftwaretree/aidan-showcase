@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { AndroidNavBar, Card, Phone, PrimaryButton, TopBar } from '@/components/AidanUI';
+import { Card, Phone, PrimaryButton, TopBar } from '@/components/AidanUI';
 import { cartItems } from '@/data/mock';
 
 export default function CartMoneyScreen() {
@@ -19,7 +19,6 @@ export default function CartMoneyScreen() {
         <DeliveryBox />
         <PrimaryButton label="finalizar" href="/list-success" style={styles.button} />
       </View>
-      <View style={styles.nav}><AndroidNavBar /></View>
     </Phone>
   );
 }

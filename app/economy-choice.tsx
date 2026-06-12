@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { AndroidNavBar, Card, Phone, PrimaryButton } from '@/components/AidanUI';
+import { Card, Phone, PrimaryButton } from '@/components/AidanUI';
 
 export default function EconomyChoiceScreen() {
+  const [isDefault, setIsDefault] = useState(false);
+
   return (
     <Phone bordered contentStyle={styles.phone}>
       <View style={styles.top}><Pressable onPress={() => router.back()}><Ionicons name="arrow-back" size={28} color="#111" /></Pressable></View>
@@ -17,10 +20,9 @@ export default function EconomyChoiceScreen() {
           <Ionicons name="cash-outline" size={38} color="#4AD6A6" />
           <View style={styles.choiceText}><Text style={styles.choiceTitle}>Economize{`\n`}DINHEIRO</Text><Text style={styles.choiceDesc}>Descubra os melhores preços perto de você!{`\n`}O AIDAN te ajuda a comparar produtos e preços de cada mercado.</Text><Text style={styles.choiceFooter}>Dinâmico, Inteligente e Eficiente!</Text></View>
         </Card>
-        <View style={styles.checkboxRow}><Ionicons name="square-outline" size={22} color="#444" /><Text style={styles.defaultText}>Tornar sua escolha padrão?</Text></View>
+        <Pressable onPress={() => setIsDefault(!isDefault)} style={styles.checkboxRow}><Ionicons name={isDefault ? 'checkbox' : 'square-outline'} size={22} color={isDefault ? '#5865F2' : '#444'} /><Text style={styles.defaultText}>Tornar sua escolha padrão?</Text></Pressable>
         <PrimaryButton label="finalizar" href="/cart-money" style={styles.button} />
       </View>
-      <View style={styles.nav}><AndroidNavBar /></View>
     </Phone>
   );
 }

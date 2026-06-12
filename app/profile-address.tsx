@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { AndroidNavBar, Card, Phone, PrimaryButton, TopBar } from '@/components/AidanUI';
+import { Card, Phone, PrimaryButton, TopBar } from '@/components/AidanUI';
 
 export default function ProfileAddressScreen() {
   const [address, setAddress] = useState('');
@@ -35,7 +35,6 @@ export default function ProfileAddressScreen() {
         </Card>
         <PrimaryButton label="Salvar alterações" href="/home" style={styles.button} />
       </View>
-      <View style={styles.nav}><AndroidNavBar /></View>
     </Phone>
   );
 }

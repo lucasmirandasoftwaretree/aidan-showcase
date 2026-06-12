@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { BottomArea, IconLine, Phone, TopBar } from '@/components/AidanUI';
 
 export default function SettingsScreen() {
@@ -13,7 +14,7 @@ export default function SettingsScreen() {
         <IconLine icon="information-circle-outline" text="Termos de Uso" />
         <IconLine icon="shield-checkmark-outline" text="Política de Privacidade" />
         <IconLine icon="information-circle-outline" text="Sobre o app" />
-        <View style={styles.deleteRow}><Ionicons name="close" size={31} color="#333" /><Text style={styles.deleteText}>Excluir conta</Text></View>
+        <Pressable onPress={() => router.back()} style={styles.deleteRow}><Ionicons name="close" size={31} color="#333" /><Text style={styles.deleteText}>Excluir conta</Text></Pressable>
       </View>
       <BottomArea active="home" />
     </Phone>

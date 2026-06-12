@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import type { Href } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { AndroidNavBar, Card, Phone, PrimaryButton, TopBar } from '@/components/AidanUI';
+import { Card, Phone, PrimaryButton, TopBar } from '@/components/AidanUI';
 
 function Option({ icon, title, desc, selected = false, href }: { icon: keyof typeof Ionicons.glyphMap; title: string; desc: string; selected?: boolean; href?: Href }) {
   return (
@@ -28,7 +28,6 @@ export default function EarnScreen() {
         </View>
         <PrimaryButton label="Salvar alterações" href="/earn-dashboard" style={styles.button} />
       </View>
-      <View style={styles.nav}><AndroidNavBar /></View>
     </Phone>
   );
 }
