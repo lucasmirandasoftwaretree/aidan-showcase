@@ -3,7 +3,7 @@ import { Animated, Easing, Image, Pressable, StyleSheet, Text, View } from 'reac
 import { router } from 'expo-router';
 import { FloatingShapes, Phone } from '@/components/AidanUI';
 
-const shopCart = require('../assets/shop-cart.jpeg');
+const shopCart = require('../assets/shop-cart.png');
 
 export default function WelcomeScreen() {
   const cartTranslateX = useRef(new Animated.Value(-280)).current;
@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
   tapArea: { flex: 1, paddingHorizontal: 38, paddingTop: 70, backgroundColor: '#48CFC5' },
   title: { color: '#FFFFFF', textAlign: 'center', fontSize: 24, lineHeight: 39, fontWeight: '900', marginBottom: 40 },
   subtitle: { color: '#FFFFFF', textAlign: 'center', fontSize: 16, lineHeight: 23, fontWeight: '600' },
-  cartAnimation: { width: 230, height: 190, alignSelf: 'center', marginTop: 82, alignItems: 'center', justifyContent: 'center' },
-  cartImage: { width: 220, height: 180 },
+  cartAnimation: { width: 250, height: 200, alignSelf: 'center', marginTop: 78, alignItems: 'center', justifyContent: 'center' },
+  cartImage: { width: 236, height: 188 },
   dots: { flexDirection: 'row', gap: 12, justifyContent: 'center', marginTop: 85 },
   dot: { width: 11, height: 11, borderRadius: 6, backgroundColor: 'rgba(255,255,255,0.30)' },
   dotActive: { width: 11, height: 11, borderRadius: 6, backgroundColor: 'rgba(255,255,255,0.50)' }
