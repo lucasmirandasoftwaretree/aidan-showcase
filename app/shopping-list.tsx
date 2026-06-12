@@ -1,0 +1,45 @@
+import { StyleSheet, Text, View } from 'react-native';
+import { BottomArea, Card, Phone, PrimaryButton, SearchBox, TopBar } from '@/components/AidanUI';
+import { cartItems } from '@/data/mock';
+
+export default function ShoppingListScreen() {
+  return (
+    <Phone bordered contentStyle={styles.phone}>
+      <TopBar title="Lista de Compras" />
+      <View style={styles.content}>
+        <SearchBox />
+        <Text style={styles.mail}>✉️</Text>
+        <Card style={styles.listCard}>
+          <Text style={styles.listTitle}>LISTA</Text>
+          <View style={styles.tableHeader} />
+          {cartItems.map((row, index) => (
+            <View key={row.item} style={styles.itemRow}>
+              <View style={styles.checkbox} />
+              <Text style={styles.itemName}>{row.item}</Text>
+              <Text style={styles.qty}>{row.qty}</Text>
+            </View>
+          ))}
+          <View style={styles.emptyRows}>{Array.from({ length: 6 }).map((_, i) => <View key={i} style={styles.emptyLine} />)}</View>
+        </Card>
+        <PrimaryButton label="Escolha seu perfil de economia" href="/saving-splash" style={styles.button} />
+      </View>
+      <BottomArea active="list" />
+    </Phone>
+  );
+}
+
+const styles = StyleSheet.create({
+  phone: { backgroundColor: '#FFFFFF' },
+  content: { paddingHorizontal: 20, paddingTop: 24, paddingBottom: 112 },
+  mail: { color: '#5865F2', fontSize: 26, marginTop: 17, marginLeft: 9, marginBottom: 4 },
+  listCard: { minHeight: 398, borderColor: '#5865F2', borderRadius: 11, overflow: 'hidden', marginBottom: 25 },
+  listTitle: { color: '#5865F2', fontSize: 17, fontWeight: '900', textAlign: 'center', paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#5865F2' },
+  tableHeader: { height: 8 },
+  itemRow: { height: 26, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 18, borderBottomWidth: 1, borderBottomColor: '#EEEEEE' },
+  checkbox: { width: 15, height: 15, borderWidth: 2, borderColor: '#EEEEEE', marginRight: 10 },
+  itemName: { color: '#333333', fontSize: 11, flex: 1 },
+  qty: { color: '#333333', fontSize: 11, width: 44 },
+  emptyRows: { flex: 1, paddingHorizontal: 18 },
+  emptyLine: { height: 26, borderBottomWidth: 1, borderBottomColor: '#EEEEEE' },
+  button: { backgroundColor: '#5865F2' }
+});

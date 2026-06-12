@@ -7,7 +7,7 @@ const googleIcon = require('../assets/google-g.png');
 const daraProfile = require('../assets/dara-profile.png');
 
 export default function GoogleAccountScreen() {
-  const goToDemo = () => router.replace('/(tabs)/home');
+  const goToDemo = () => router.replace('/register');
   const goBack = () => router.back();
 
   return (

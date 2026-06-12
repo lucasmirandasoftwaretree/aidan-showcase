@@ -6,17 +6,15 @@ const logo = require('../assets/aidan-logo.png');
 const googleIcon = require('../assets/google-g.png');
 
 export default function LoginScreen() {
-  const goToDemo = () => router.replace('/(tabs)/home');
   const goToGoogleFlow = () => router.push('/google-account');
+  const goToDemo = () => router.replace('/home');
 
   return (
     <View style={styles.page}>
       <StatusBar style="light" />
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.keyboard}>
         <View style={styles.container}>
-          <View style={styles.logoWrapper}>
-            <Image source={logo} style={styles.logo} resizeMode="contain" />
-          </View>
+          <Image source={logo} style={styles.logo} resizeMode="contain" />
 
           <Text style={styles.title}>FAÇA LOGIN OU CRIE UMA CONTA</Text>
 
@@ -30,7 +28,7 @@ export default function LoginScreen() {
           <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#BDBDBD" keyboardType="email-address" autoCapitalize="none" />
           <TextInput style={styles.input} placeholder="Senha" placeholderTextColor="#BDBDBD" secureTextEntry />
 
-          <Pressable style={styles.forgotButton} onPress={() => router.push('/onboarding')}>
+          <Pressable style={styles.forgotButton} onPress={() => router.push('/register')}>
             <Text style={styles.forgotText}>Esqueceu sua senha?</Text>
           </Pressable>
 
@@ -38,7 +36,7 @@ export default function LoginScreen() {
             <Text style={styles.loginText}>Entrar</Text>
           </Pressable>
 
-          <Pressable style={styles.signupButton} onPress={() => router.push('/onboarding')}>
+          <Pressable style={styles.signupButton} onPress={() => router.push('/register')}>
             <Text style={styles.signupText}>Ainda não possui uma conta? Cadastre-se</Text>
           </Pressable>
         </View>
@@ -61,7 +59,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    maxWidth: 347,
+    maxWidth: Platform.OS === 'web' ? 347 : undefined,
     minHeight: 739,
     alignItems: 'center',
     backgroundColor: '#5865F2',
@@ -69,16 +67,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 38,
     paddingTop: 55
   },
-  logoWrapper: {
-    width: 184,
-    height: 151,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 50
-  },
   logo: {
     width: 184,
-    height: 151
+    height: 151,
+    marginBottom: 50
   },
   title: {
     width: '100%',
@@ -148,7 +140,6 @@ const styles = StyleSheet.create({
   loginButton: {
     width: '100%',
     height: 46,
-    borderRadius: 0,
     backgroundColor: '#3100F5',
     alignItems: 'center',
     justifyContent: 'center',
